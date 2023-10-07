@@ -22,8 +22,8 @@ if __name__ == '__main__':
     ar_name = list()
     ar_val = list()
 
-    t_1 = threading.Thread(target=get_CPU, args=(ar_time, ar_name, ar_val), daemon=True)
-    t_2 = threading.Thread(target=get_RAM, args=(ar_time, ar_name, ar_val), daemon=True)
+    t_1 = threading.Thread(target=get_CPU, args=(ar_time, ar_name, ar_val,), daemon=True)
+    t_2 = threading.Thread(target=get_RAM, args=(ar_time, ar_name, ar_val,), daemon=True)
     t_1.start()
     t_2.start()
 
@@ -31,8 +31,8 @@ if __name__ == '__main__':
     while time.time() < stop_time:
         a = 0
 
-    t_1.join()
-    t_2.join()
+    t_1.join(0.001)
+    t_2.join(0.001)
 
     table = pd.DataFrame({"Время": ar_time, "Название метрики": ar_name, "Значение": ar_val})
     table.to_csv("data.csv", sep = ";")
